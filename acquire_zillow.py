@@ -161,22 +161,33 @@ def write_2017_csv(df):
     df.to_csv('properties_2017.csv')
 
 
+def all_zillow_data():
+    zillow_chunks = [get_2016_property_data(),get_2017_property_data()]
+    all_zillow = pd.concat(zillow_chunks, ignore_index=True)
+    all_zillow.dropna(subset=['latitude', 'longitude'], inplace=True)
+    all_zillow.to_csv('zillow.csv')
+    return all_zillow
+
+
 def peekatdata(df):
-    print("HEAD:")
-    print(df.head(5))
-
-    print('\n \n TAIL:' )
-    print(df.tail(5))
-
     print("\n \n SHAPE:")
     print(df.shape)
 
-    print("\n \n DESCRIBE:")
-    print(df.describe())
+    print("\n \n COLS:")
+    print(df.columns)
 
-    print("\n \n INFO")
+    print("\n \n INFO:")
     print(df.info())
 
     print("\n \n Missing Values:")
     missing_vals = df.columns[df.isnull().any()]
     print(df.isnull().sum())
+
+    print("\n \n DESCRIBE:")
+    print(df.describe())
+
+    print('\n \n HEAD:')
+    print(df.head(5))
+
+    print('\n \n TAIL:' )
+    print(df.tail(5))

@@ -12,3 +12,26 @@ def get_mall_data():
 def write_mall_csv(df):
     '''creates csv of mall customer info'''
     df.to_csv('mall_customers.csv')
+
+def peekatdata(df):
+    print("\n \n SHAPE:")
+    print(df.shape)
+
+    print("\n \n COLS:")
+    print(df.columns)
+
+    print("\n \n INFO:")
+    print(df.info())
+
+    print("\n \n Missing Values:")
+    missing_vals = df.columns[df.isnull().any()]
+    print(df.isnull().sum())
+
+    print("\n \n DESCRIBE:")
+    print(df.describe())
+
+    print('\n \n HEAD:')
+    print(df.head(5))
+
+    print('\n \n TAIL:' )
+    print(df.tail(5))

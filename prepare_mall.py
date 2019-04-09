@@ -3,6 +3,9 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import MinMaxScaler
 
+def new_index(df):
+    df.set_index('customer_id', inplace=True)
+    return df
 
 def get_upper_outliers(s, k):
     '''
@@ -15,7 +18,7 @@ def get_upper_outliers(s, k):
     upper_bound = q3 + k * iqr
     return s.apply(lambda x: max([x - upper_bound, 0]))
 
-def add_upper_outlier_columns(df, k):
+def add_upper_outlier_columns(df, k=3):
     '''
     Add a column with the suffix _outliers for all the numeric columns in the given dataframe.\
     '''
@@ -26,6 +29,22 @@ def add_upper_outlier_columns(df, k):
         df[col + '_outliers'] = get_upper_outliers(df[col], k)
     return df
 
+def gender_encode(df):
+    tdf = df.copy()
+    tdf.gender.replace('Female', '0',inplace = True)
+    tdf.gender.replace('Male', '1',inplace = True)
+    df['gender_encode'] = tdf.gender.astype('int')
+    return df
+
+def dumb_df(df):
+    return pd.get_dummies(df)
+
+def prep_mall_data(df):
+    return df.pipe(new_index)\
+    .pipe(add_upper_outlier_columns)\
+    .pipe(gender_encode)
+    # .pipe(dumb_df)
+
 def outlier_peek(df):
     outlier_cols = [col for col in df if col.endswith('_outliers')]
     for col in outlier_cols:
@@ -33,32 +52,25 @@ def outlier_peek(df):
         data = df[col][df[col] > 0]
         print(data.describe())
 
-def dumb_df(df):
-    pd.get_dummies(df)
-    return df
-    
-def prep_mall_data(df):
-    return df.pipe(get_upper_outliers)\
-    .pipe(add_upper_outlier_columns)\
-    .pipe(outlier_peek)\
-    .pipe(dumb_df)
-
 def peekatdata(df):
-    print("HEAD:")
-    print(df.head(5))
-
-    print('\n \n TAIL:' )
-    print(df.tail(5))
-
     print("\n \n SHAPE:")
     print(df.shape)
 
-    print("\n \n DESCRIBE:")
-    print(df.describe())
+    print("\n \n COLS:")
+    print(df.columns)
 
-    print("\n \n INFO")
+    print("\n \n INFO:")
     print(df.info())
 
     print("\n \n Missing Values:")
     missing_vals = df.columns[df.isnull().any()]
     print(df.isnull().sum())
+
+    print("\n \n DESCRIBE:")
+    print(df.describe())
+
+    print('\n \n HEAD:')
+    print(df.head(5))
+
+    print('\n \n TAIL:' )
+    print(df.tail(5))
