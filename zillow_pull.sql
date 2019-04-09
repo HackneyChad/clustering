@@ -69,8 +69,8 @@ SELECT pred_prop.transactiondate
 ,taxdelinquencyyear
 ,censustractandblock
 FROM (SELECT pd.transactiondate, pd.logerror, pd.parcelid, airconditioningtypeid, architecturalstyletypeid, basementsqft, bathroomcnt, bedroomcnt, buildingclasstypeid, buildingqualitytypeid, calculatedbathnbr, decktypeid, finishedfloor1squarefeet, calculatedfinishedsquarefeet, finishedsquarefeet12, finishedsquarefeet13, finishedsquarefeet15, finishedsquarefeet50, finishedsquarefeet6, fips, fireplacecnt, fullbathcnt, garagecarcnt, garagetotalsqft, hashottuborspa, heatingorsystemtypeid, latitude, longitude, lotsizesquarefeet, poolcnt, poolsizesum, pooltypeid10, pooltypeid2, pooltypeid7, propertycountylandusecode, propertylandusetypeid, propertyzoningdesc, rawcensustractandblock, regionidcity, regionidcounty, regionidneighborhood, regionidzip, roomcnt, storytypeid, threequarterbathnbr, typeconstructiontypeid, unitcnt, yardbuildingsqft17, yardbuildingsqft26, yearbuilt, numberofstories, fireplaceflag, structuretaxvaluedollarcnt, taxvaluedollarcnt, assessmentyear, landtaxvaluedollarcnt, taxamount, taxdelinquencyflag, taxdelinquencyyear, censustractandblock
-	FROM predictions_2016 pd 
-	LEFT JOIN properties_2016 p ON p.parcelid = pd.parcelid) AS pred_prop
+	FROM predictions_2017 pd 
+	LEFT JOIN properties_2017 p ON p.parcelid = pd.parcelid) AS pred_prop
 LEFT OUTER JOIN airconditioningtype act ON act.airconditioningtypeid = pred_prop.airconditioningtypeid
 LEFT OUTER JOIN architecturalstyletype ast ON ast.architecturalstyletypeid = pred_prop.architecturalstyletypeid
 LEFT OUTER JOIN buildingclasstype bct ON bct.buildingclasstypeid = pred_prop.buildingclasstypeid

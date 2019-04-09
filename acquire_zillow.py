@@ -79,10 +79,8 @@ def get_2016_property_data():
     , get_connection('zillow'))
 
 def write_2016_csv(df):
-    '''creates csv of 2017 zillow info'''
+    '''creates csv of 2016 zillow info'''
     df.to_csv('properties_2016.csv')
-
-
 
 def get_2017_property_data():
     '''gets 2017 zillow properties & predictions data from zillow sql dbase'''
@@ -161,6 +159,7 @@ def get_2017_property_data():
 def write_2017_csv(df):
     '''creates csv of 2017 zillow info'''
     df.to_csv('properties_2017.csv')
+
 
 def peekatdata(df):
     print("HEAD:")
