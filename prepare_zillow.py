@@ -10,7 +10,8 @@ def get_full_zillow():
 
 def singles_only(df):
     '''looks at single units only'''
-    singles = ['Cluster Home', 'Condominium', 'Cooperative', 'Manufactured, Modular, Prefabricated Homes', 'Mobile Home', 'Residential General', 'Single Family Residential', 'Townhouse']
+    singles = ['Single Family Residential']
+    # singles = ['Cluster Home', 'Condominium', 'Cooperative', 'Manufactured, Modular, Prefabricated Homes', 'Mobile Home', 'Residential General', 'Single Family Residential', 'Townhouse']
     df = df[df.propertylandusedesc.isin(singles)] 
     return df
 
@@ -37,13 +38,18 @@ def handle_missing_values(df, prop_required_column = .75, prop_required_row = .7
 #     df = df.fillna(value=0, inplace = True)
 #     return df
 
-def data_prep(df, cols_to_remove=['heatingorsystemdesc','lotsizesquarefeet','propertyzoningdesc','fullbathcnt'], prop_required_column=.75, prop_required_row=.75):
+def drop_remaining_missing(df):
+    df = df.dropna()
+    return df
+
+def data_prep(df, cols_to_remove=['calculatedbathnbr','finishedsquarefeet12','assessmentyear','roomcnt','landtaxvaluedollarcnt','structuretaxvaluedollarcnt','rawcensustractandblock','heatingorsystemdesc','lotsizesquarefeet','propertyzoningdesc','fullbathcnt'], prop_required_column=.75, prop_required_row=.75):
     df = nums_to_obj(df)
     df = singles_only(df)
     df = remove_columns(df, cols_to_remove)
     df = handle_missing_values(df, prop_required_column, prop_required_row)
     # df = fill_unitcnt(df)
     # df = fill_all_others(df)
+    df = drop_remaining_missing(df)
     return df
 
 def peekatdata(df):
