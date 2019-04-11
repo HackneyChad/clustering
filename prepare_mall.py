@@ -37,7 +37,7 @@ def gender_encode(df):
     return df
 
 def dumb_df(df):
-    return pd.get_dummies(df)
+    return pd.get_dummies(df, drop_first=False)
 
 def prep_mall_data(df):
     return df.pipe(new_index)\
