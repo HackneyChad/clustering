@@ -94,7 +94,9 @@ def drop_remaining_missing(df):
     return df
 
 #Erics logic for trimming outliers: Removing outliers beyond three standard deviations from all columns:
-#df_fixed = df_join[(np.abs(stats.zscore(df_join)) < 3).all(axis=1)]
+# def drop_outliers(df):
+#     df = df[(np.abs(stats.zscore(df)) < 3).all(axis=1)]
+#     return df
 
 def data_prep(df, cols_to_remove=[], prop_required_column=.75, prop_required_row=.75):
     df = nums_to_obj(df)
