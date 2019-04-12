@@ -38,7 +38,6 @@ def handle_missing_values(df, prop_required_column = .75, prop_required_row = .7
 #     df = df.calcfillna(0, inplace = True)
 #     return df
 
-
 def drop_nans_yearbuilt(df):
     df = df[df.yearbuilt != 'nan']
     return df
@@ -83,7 +82,7 @@ def check_missing_values_col(df):
 	                     'nan_count': nan_count, 'nan_percentage': nan_percentage})
 
 def field_drop(df):
-    df = df.drop(columns=(['calculatedbathnbr',
+    df = df.drop(columns=(['propertylandusedesc','calculatedbathnbr',
     'finishedsquarefeet12','assessmentyear','roomcnt',
     'landtaxvaluedollarcnt','structuretaxvaluedollarcnt','rawcensustractandblock',
     'lotsizesquarefeet','fullbathcnt']))
@@ -93,10 +92,16 @@ def drop_remaining_missing(df):
     df = df.dropna()
     return df
 
-#Erics logic for trimming outliers: Removing outliers beyond three standard deviations from all columns:
+# create list of numberic variables to feed into the thing below
+# Erics logic for trimming outliers: Removing outliers beyond three standard deviations from all columns:
 # def drop_outliers(df):
 #     df = df[(np.abs(stats.zscore(df)) < 3).all(axis=1)]
 #     return df
+
+# df[numeric vars] = df[numeric vars].    df[(np.abs(stats.zscore(df)) < 3).all(axis=1)]
+
+# def dumb_df(df):
+#     return pd.get_dummies(df, drop_first=False)
 
 def data_prep(df, cols_to_remove=[], prop_required_column=.75, prop_required_row=.75):
     df = nums_to_obj(df)
@@ -115,6 +120,7 @@ def data_prep(df, cols_to_remove=[], prop_required_column=.75, prop_required_row
     # df = fill_taxvaluedollarcnt(df)
     # df = fill_calculatedfinishedsquarefeet(df)
     df = drop_remaining_missing(df)
+    # df = dumb_df(df)
     return df
 
 
